@@ -1,4 +1,4 @@
-﻿using System;                     
+using System;                     
 using System.IO;                 
 using System.Text;                
 using System.Collections.Generic; 
@@ -14,6 +14,8 @@ class Program
         darab();
         utolsonev();
         szazad();
+        nemzet();
+        rajtszam();
     }
 
 
@@ -59,12 +61,33 @@ class Program
     }
     public static void utolsonev()
     {
-        string lname = lista.Last().name;
+        string lname = lista.Last().name; //visszaadja a listában az utolsó nevet
         Console.WriteLine($"4f: {lname}");
 
     }
 
+    public static void rajtszam()
+    {
+        var query = ( // Kiválasztja azokat a sorokat ahol a rajtszám nagyobb mint 0 rajtszám szerint a számok listába
+        from sor in lista where sor.rszam > 0 group sor by sor.rszam into szamok where szamok.Count() > 1 select szamok.Key);
 
+        Console.Write($"7f:");
+        foreach (var i in query)
+        {
+            Console.Write($" {i} ");
+        }
+        Console.WriteLine();
+
+    }
+    
+    public static void nemzet()
+    {
+        
+        var nemzet = (   // Kiválasztja azt a sort a listából ahol a rajtszám 0 rszam szerint a nemzetiséget
+            from sor in lista where sor.rszam > 0 orderby sor.rszam select sor.nemzet).First(); //.first -> Első eleme a listának
+        Console.WriteLine($"6f: {nemzet}");
+
+    }
 
 
 }
